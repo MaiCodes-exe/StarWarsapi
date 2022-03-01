@@ -33,7 +33,6 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            # do not serialize the password, its a security breach
         }
 
 class People(db.Model):
@@ -62,8 +61,6 @@ class People(db.Model):
             "name": self.name,
             "gender": self.gender,
             "birth_year": self.birth_year
-
-            # do not serialize the password, its a security breach
         }
 
 class Planets(db.Model):   
@@ -94,7 +91,6 @@ class Planets(db.Model):
             "population": self.population,
             "climate": self.climate,
             "terrain": self.terrain
-            # do not serialize the password, its a security breach
         }
 
 class FavoritePlanets(db.Model):
@@ -122,7 +118,6 @@ class FavoritePlanets(db.Model):
             "name": self.name,
             "planet_id": self.planets_id,
             "user_id": self.user_id
-            # do not serialize the password, its a security breach
         }
 
 class FavoritePeople(db.Model):
@@ -148,5 +143,4 @@ class FavoritePeople(db.Model):
             "id": self.id,
             "name": self.name,
             "user_id": self.user_id
-            # do not serialize the password, its a security breach
         }
