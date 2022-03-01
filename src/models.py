@@ -13,11 +13,21 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    # planets_favorites = relationship('FavoritePlanets', backref='User', lazy=True)
-    # people_favorites = relationship('FavoritePeople', backref='User', lazy=True)
+    planets_favorites = relationship('FavoritePlanets', backref='User', lazy=True)
+    people_favorites = relationship('FavoritePeople', backref='User', lazy=True)
 
     def __repr__(self):
         return '<User %r>' % self.id
+
+
+    @classmethod 
+    def get_users(cls,id):
+        users = cls.query.get(id)
+        return users
+
+    @classmethod
+    def get_utl(cls):
+        return cls.query.all()
 
     def serialize(self):
         return {
@@ -32,7 +42,7 @@ class People(db.Model):
     height= db.Column(db.Integer)
     gender= db.Column(db.String(50))
     birth_year= db.Column(db.Integer)
-    # people_favorites = relationship('FavoritePeople', backref='People', lazy=True)
+    people_favorites = relationship('FavoritePeople', backref='People', lazy=True)
 
     def __repr__(self):
         return '<People %r>' % self.name
@@ -51,6 +61,8 @@ class People(db.Model):
             "id": self.id,
             "name": self.name,
             "gender": self.gender,
+            "birth_year": self.birth_year
+
             # do not serialize the password, its a security breach
         }
 
@@ -60,7 +72,7 @@ class Planets(db.Model):
     climate= Column(String(200))
     terrain= Column(String(200))
     population= Column(Integer)
-    # planets_favorites = relationship('FavoritePlanets', backref='Planets', lazy=True)
+    planets_favorites = relationship('FavoritePlanets', backref='Planets', lazy=True)
 
 
     def __repr__(self):
@@ -79,8 +91,9 @@ class Planets(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "mass": self.mass,
-            "population": self.population
+            "population": self.population,
+            "climate": self.climate,
+            "terrain": self.terrain
             # do not serialize the password, its a security breach
         }
 

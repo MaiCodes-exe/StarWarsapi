@@ -30,14 +30,9 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-# @app.route('/user', methods=['GET'])
-# def handle_hello():
 
-#     response_body = {
-#         "msg": "Hello, this is your GET /user response "
-#     }
-#     return jsonify(response_body), 200
 
+##done
 @app.route('/people', methods=['GET'])
 def list_people():
     people= People.get_peeps()
@@ -45,13 +40,17 @@ def list_people():
     for people in people: 
         serialize_people.append(people.serialize())
     return jsonify(serialize_people), 200
-##done
 
+
+
+##done
 @app.route('/people/<int:people_id>', methods=['GET'])
-def get_person():
-    person= People.get_by_id()
+def get_person_by_id(people_id):
+    people= People.get_people(people_id)
     return jsonify(people.serialize()), 200
 
+
+##done
 @app.route('/planets', methods=['GET'])
 def list_planets():
     planets= Planets.get_planets()
@@ -60,41 +59,47 @@ def list_planets():
         serialize_planets.append(planet.serialize())
     return jsonify(serialize_planets), 200
 
+
+
+##done
 @app.route('/planets/<int:planet_id>', methods=['GET'])
 def get_planet_by_id(planet_id):
     planet= Planets.get_by_id(planet_id)
     return jsonify(planet.serialize()), 200
 
-
+##done
 @app.route('/user', methods=['GET'])
-def get_user():
-    users= User.query.all()
+def list_users():
+    users= User.get_utl()
     serialize_users= [] 
     for user in users: 
         serialize_users.append(user.serialize())
-    return jsonify(user.serialize()), 200
+    return jsonify(serialize_users), 200
 
-@app.route('/users/favorites/<int:user_id>', methods=['GET'])
+
+##done
+@app.route('/user/favorites/<int:user_id>', methods=['GET'])
 def get_favs(user_id):
-    # favorites_people= FavoritePeople.query.filter_by(user_id=user_id)
-    # favorites_planets= FavoritePlanets.query.filter_by(user_id=user_id)
-    serialize_favorite= [] 
-    for favorite in favorites_people: 
-        serialize_favorite.append(favorite.serialize())
+    favorites_people= FavoritePeople.query.filter_by(user_id=user_id)
+    favorites_planets= FavoritePlanets.query.filter_by(user_id=user_id)
+    serialize_favorite= []
     for favorite in favorites_planets: 
         serialize_favorite.append(favorite.serialize())
     return jsonify(serialize_favorite), 200
 
+##done
 @app.route('/people/<int:people_id>', methods=['POST'])
 def get_people_by_id(people_id):
     people= People.get_people(people_id)
     return jsonify(planet.serialize()), 200
 
+##done
 @app.route('/favorite/planet/<int:planet_id>', methods=['DELETE'])
 def delete_planet(planet_id):
-    dlt= Planets.get_fav_planet(planet_id)
+    dlt= Planets.get_by_id(planet_id)
     return jsonify(dlt.serialize()), 200
 
+##done
 @app.route('/favorite/people/<int:people_id>', methods=['DELETE'])
 def delete_people(people_id):
     dlt_people= FavoritePeople.get_fav_people(people_id)
