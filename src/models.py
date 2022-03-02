@@ -8,16 +8,16 @@ from sqlalchemy import create_engine
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    planets_favorites = relationship('FavoritePlanets', backref='User', lazy=True)
-    people_favorites = relationship('FavoritePeople', backref='User', lazy=True)
+    planets_favorites = relationship('FavoritePlanets', backref='Users', lazy=True)
+    people_favorites = relationship('FavoritePeople', backref='Users', lazy=True)
 
     def __repr__(self):
-        return '<User %r>' % self.id
+        return '<Users %r>' % self.id
 
 
     @classmethod 
@@ -33,6 +33,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            # do not serialize the password, its a security breach
         }
 
 class People(db.Model):
@@ -61,6 +62,8 @@ class People(db.Model):
             "name": self.name,
             "gender": self.gender,
             "birth_year": self.birth_year
+
+            # do not serialize the password, its a security breach
         }
 
 class Planets(db.Model):   
@@ -91,12 +94,13 @@ class Planets(db.Model):
             "population": self.population,
             "climate": self.climate,
             "terrain": self.terrain
+            # do not serialize the password, its a security breach
         }
 
 class FavoritePlanets(db.Model):
     id= Column(Integer, primary_key=True)
     name= Column(String(200))
-    user_id= Column(Integer, ForeignKey('user.id'))
+    user_id= Column(Integer, ForeignKey('users.id'))
     planets_id= Column(Integer, ForeignKey('planets.id'))
 
     def __repr__(self):
@@ -118,12 +122,13 @@ class FavoritePlanets(db.Model):
             "name": self.name,
             "planet_id": self.planets_id,
             "user_id": self.user_id
+            # do not serialize the password, its a security breach
         }
 
 class FavoritePeople(db.Model):
     id= Column(Integer, primary_key=True)
     name= Column(String(200))
-    user_id= Column(Integer, ForeignKey('user.id'))
+    user_id= Column(Integer, ForeignKey('users.id'))
     people_id= Column(Integer, ForeignKey('people.id'))
 
     def __repr__(self):
@@ -143,4 +148,5 @@ class FavoritePeople(db.Model):
             "id": self.id,
             "name": self.name,
             "user_id": self.user_id
+            # do not serialize the password, its a security breach
         }
