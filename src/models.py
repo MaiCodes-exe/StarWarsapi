@@ -100,7 +100,7 @@ class Planets(db.Model):
 class FavoritePlanets(db.Model):
     id= Column(Integer, primary_key=True)
     name= Column(String(200))
-    user_id= Column(Integer, ForeignKey('users.id'))
+    users_id= Column(Integer, ForeignKey('users.id'))
     planets_id= Column(Integer, ForeignKey('planets.id'))
 
     def __repr__(self):
@@ -121,14 +121,14 @@ class FavoritePlanets(db.Model):
             "id": self.id,
             "name": self.name,
             "planet_id": self.planets_id,
-            "user_id": self.user_id
+            "users_id": self.users_id
             # do not serialize the password, its a security breach
         }
 
 class FavoritePeople(db.Model):
     id= Column(Integer, primary_key=True)
     name= Column(String(200))
-    user_id= Column(Integer, ForeignKey('users.id'))
+    users_id= Column(Integer, ForeignKey('users.id'))
     people_id= Column(Integer, ForeignKey('people.id'))
 
     def __repr__(self):
@@ -147,6 +147,6 @@ class FavoritePeople(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "user_id": self.user_id
+            "users_id": self.users_id
             # do not serialize the password, its a security breach
         }

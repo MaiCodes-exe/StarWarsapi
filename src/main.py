@@ -79,9 +79,9 @@ def list_users():
 
 ##done
 @app.route('/users/favorites/<int:user_id>', methods=['GET'])
-def get_favs(user_id):
-    favorites_people= FavoritePeople.query.filter_by(user_id=user_id)
-    favorites_planets= FavoritePlanets.query.filter_by(user_id=user_id)
+def get_favs(users_id):
+    favorites_people= FavoritePeople.query.filter_by(users_id=users_id)
+    favorites_planets= FavoritePlanets.query.filter_by(users_id=users_id)
     serialize_favorite= []
     for favorite in favorites_planets:
         serialize_favorite.append(favorite.serialize())
