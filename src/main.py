@@ -91,7 +91,7 @@ def get_favs(users_id):
 @app.route('/people/<int:people_id>', methods=['POST'])
 def get_people_by_id(people_id):
     people= People.get_people(people_id)
-    return jsonify(planet.serialize()), 200
+    return jsonify(people.serialize()), 200
 
 ##done
 @app.route('/favorite/planet/<int:planet_id>', methods=['DELETE'])
